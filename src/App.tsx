@@ -7,13 +7,13 @@ import bacon from './assets/bacon.png';
 import Ingredient from './components/Ingredient/Ingredient';
 import Burger from './components/Burger/Burger';
 
- interface IIngredient {
+interface IIngredient {
   name: string;
   price: number;
   image: string;
 }
 
- export interface IIngredientsState {
+export interface IIngredientsState {
   name: string;
   count: number;
 }
@@ -24,6 +24,8 @@ const INGREDIENTS: IIngredient[] = [
   {name: 'Meat', price: 80, image: meat},
   {name: 'Bacon', price: 60, image: bacon},
 ];
+
+const PRICE: number = 30;
 const App = () => {
 
     const [ingredients, setIngredients] = useState<IIngredientsState[]>([
@@ -34,11 +36,14 @@ const App = () => {
       ]
     );
 
+    const [price, setPrice] = useState<number>(PRICE);
+
     const setCount = (index: number) => {
       const copyIngs = [...ingredients];
       const copyIng = {...copyIngs[index]};
       copyIng.count++;
       copyIngs[index] = copyIng;
+      getPrice(copyIngs);
       setIngredients(copyIngs);
     };
 
@@ -48,9 +53,20 @@ const App = () => {
       copyIng.count = copyIng.count ? copyIng.count - 1 : 0;
 
       copyIngs[index] = copyIng;
+      getPrice(copyIngs);
       setIngredients(copyIngs);
 
     };
+
+    const getPrice = (ingredientsCopy: IIngredientsState[]) => {
+      let resultPrice: number = PRICE;
+      for (let i = 0; i < ingredientsCopy.length; i++) {
+        resultPrice += ingredientsCopy[i].count * INGREDIENTS[i].price;
+      }
+      setPrice(resultPrice);
+
+    };
+
 
     return (
       <div className="App">
@@ -73,6 +89,7 @@ const App = () => {
           }
         </div>
         <Burger
+          price={price}
           ingredientsState={ingredients}
 
         />

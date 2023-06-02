@@ -1,10 +1,10 @@
 import React from 'react';
 import './Burger.css'
 import {IIngredientsState} from '../../App';
-import ingredient from '../Ingredient/Ingredient';
 
 interface Iprops {
   ingredientsState:IIngredientsState[];
+  price:number
 }
 const Burger:React.FC<Iprops> = props => {
 
@@ -20,7 +20,7 @@ const Burger:React.FC<Iprops> = props => {
 
   return (
     <div className="burger-wrapper">
-      <p className="price">Price:115coм</p>
+      <p className="price">Price:{props.price}coм</p>
       <div className="Burger">
         <div className="BreadTop">
           <div className="Seeds1"></div>
